@@ -1,18 +1,9 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import axios from "axios";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
@@ -21,11 +12,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
-
-const FormSchema = z.object({
-  name: z.string().min(3),
-  categoryId: z.string().nonempty(),
-});
 
 interface Category {
   _id: string;
@@ -37,65 +23,63 @@ interface SearchbarProps {
 }
 
 const Searchbar: React.FC<SearchbarProps> = ({ categories }) => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
+  const [categoryId, setCategoryId] = useState<string>("All");
+  const [name, setName] = useState<string>("");
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
-  }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(`/api/products`, {
+        params: {
+          categoryId: categoryId,
+          name: name,
+        },
+      });
+
+      // Handle the response data here (response.data)
+      console.log(response.data);
+
+      return response.data;
+    } catch (error) {
+      // Handle errors here
+      console.error("Error fetching data:", error);
+      return null;
+    }
+  };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-min flex flex-row items-center"
+    <form onSubmit={handleSubmit} className="flex flex-1 items-center w-min">
+      <Select
+        value={categoryId}
+        onValueChange={(value) => setCategoryId(value)}
       >
-        <FormField
-          control={form.control}
-          name="categoryId"
-          render={({ field }) => (
-            <FormItem>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="w-[180px] rounded-r-none">
-                    <SelectValue defaultValue="All" placeholder="All" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  className="w-auto rounded-none "
-                  placeholder="Enter product Name"
-                  {...field}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <Button
-          className="rounded-l-none rounded-r-full"
-          variant="outline"
-          size="icon"
-          type="submit"
-        >
-          <Search />
-        </Button>
-      </form>
-    </Form>
+        <SelectTrigger className="w-10 md:w-min rounded-r-none">
+          <SelectValue defaultValue="All" placeholder="All" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="All">All</SelectItem>
+          {categories.map((category) => (
+            <SelectItem key={category._id} value={category._id}>
+              {category.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      <Input
+        className="w-[6rem] md:w-auto rounded-none"
+        placeholder="Search"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <Button
+        className="hidden md:block rounded-l-none p-1 rounded-r-full"
+        variant="outline"
+        size="icon"
+        type="submit"
+      >
+        <Search />
+      </Button>
+    </form>
   );
 };
 

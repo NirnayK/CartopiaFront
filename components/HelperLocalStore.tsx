@@ -51,5 +51,5 @@ export const clearCart = (): void => {
 
 export const GetLocalStoreCartCount = (): JSX.Element => {
   let cart = getLocalStoreCart();
-  return <p className="text-2xl">{cart.length}</p>;
+  return <p className="text-xl">{cart.length}</p>;
 };

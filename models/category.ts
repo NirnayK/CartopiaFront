@@ -1,7 +1,7 @@
-import { model, models, Schema, Document } from "mongoose";
+import { Document, models, model, Model, Schema } from "mongoose";
 
 // Define the category values schema
-interface CategoryValue {
+export interface CategoryValue {
   name: string;
   values: string[];
 }
@@ -17,9 +17,7 @@ const CategorySchema: Schema<CategoryDocument> = new Schema({
   values: [{ type: Object, required: true }],
 });
 
-// Check if the Category model has already been defined
-// If yes, use the existing model; if not, create a new one
-const Category =
+const Category: Model<CategoryDocument> =
   models.Category || model<CategoryDocument>("Category", CategorySchema);
 
 export default Category;

@@ -1,21 +1,22 @@
-import { mongooseConnect } from "@/lib/mongoose";
-import Category, { CategoryDocument } from "@/models/category";
-import Searchbar from "./SearchBar";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import Pfp from "./Pfp";
+import Link from "next/link";
+import Searchbar from "./SearchBar";
+import { mongooseConnect } from "@/lib/mongoose";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { GetLocalStoreCartCount } from "../HelperLocalStore";
+import Category, { CategoryDocument } from "@/models/category";
+
+const fetchCategories = async (): Promise<CategoryDocument[]> => {
+  try {
+    return await Category.find({}, "_id name").lean();
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return [];
+  }
+};
 
 const Navbar = async () => {
   await mongooseConnect();
-
-  const fetchCategories = async (): Promise<CategoryDocument[]> => {
-    try {
-      return await Category.find({}, "_id name").lean();
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-      return [];
-    }
-  };
 
   const categories = await fetchCategories();
 
@@ -24,32 +25,35 @@ const Navbar = async () => {
     _id: category._id.toString(),
   }));
 
-  // Rest of the code remains the same...
-
   return (
-    <nav className="p-4 flex items-center justify-between border-2 w-full">
+    <nav className="w-full flex flex-1 border-b-2 justify-between items-center gap-2 md:gap-5 p-2">
       {/* logo */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="w-6 h-6"
-      >
-        <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
-        <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
-      </svg>
+      <Link href="/" className="flex gap-2 items-center h-8">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-6 h-8"
+        >
+          <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+          <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+        </svg>
+        <h1 className="hidden md:block md:text-2xl font-bold">Cartopia</h1>
+      </Link>
 
       {/* select and input bar */}
-      <Searchbar categories={transformCategories} />
+      <div>
+        <Searchbar categories={transformCategories} />
+      </div>
 
       {/* profile picture and login/logout */}
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-1 md:gap-4 items-center">
         {/* Theme button */}
         <ThemeToggle />
         {/* profile picture */}
         <Pfp />
         {/* cart  */}
-        <div className="flex gap-1">
+        <div className="flex gap-1 mr-4">
           {/* cart icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +61,7 @@ const Navbar = async () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-8 h-8"
+            className="w-7 h-7"
           >
             <path
               strokeLinecap="round"

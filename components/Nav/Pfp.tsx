@@ -23,7 +23,7 @@ const Pfp = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="outline-none">
+      <DropdownMenuTrigger className="outline-none w-9 h-9">
         {profileImage ? (
           <Image
             src={profileImage}
@@ -39,7 +39,7 @@ const Pfp = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-7 h-7"
           >
             <path
               strokeLinecap="round"
