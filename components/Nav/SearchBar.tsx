@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Category {
   _id: string;
@@ -25,25 +25,17 @@ interface SearchbarProps {
 const Searchbar: React.FC<SearchbarProps> = ({ categories }) => {
   const [categoryId, setCategoryId] = useState<string>("All");
   const [name, setName] = useState<string>("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const response = await axios.get(`/api/products`, {
-        params: {
-          categoryId: categoryId,
-          name: name,
-        },
-      });
 
-      // Handle the response data here (response.data)
-      console.log(response.data);
-
-      return response.data;
-    } catch (error) {
-      // Handle errors here
-      console.error("Error fetching data:", error);
-      return null;
+    if (categoryId === "All" && name === "") {
+      router.push("/");
+    } else if (name === "") {
+      router.push(`/${categoryId}/All`);
+    } else {
+      router.push(`/${categoryId}/${name}`);
     }
   };
 

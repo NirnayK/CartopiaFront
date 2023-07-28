@@ -11,7 +11,7 @@ export interface CategoryDocument {
 const getCategory = async (): Promise<CategoryDocument[]> => {
   await mongooseConnect();
   try {
-    const res = await Category.find({}).select("name  _id").lean();
+    const res = await Category.find({}).select("name  _id");
     const data: CategoryDocument[] = res.map((category) => {
       return {
         _id: category._id.toString(),
@@ -29,7 +29,7 @@ const Home = async () => {
   const categories = await getCategory();
 
   return (
-    <div className="space-y-8 p-4">
+    <div className="space-y-8">
       {/* featured products */}
       <div>
         <h1 className="text-2xl font-bold">Featured Products</h1>
