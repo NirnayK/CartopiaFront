@@ -30,7 +30,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ categories }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (categoryId === "All" && name === "") {
+    if (categoryId === "All") {
       router.push("/");
     } else if (name === "") {
       router.push(`/${categoryId}/All`);

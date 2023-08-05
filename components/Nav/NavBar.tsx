@@ -51,9 +51,11 @@ const Navbar = async () => {
         {/* Theme button */}
         <ThemeToggle />
         {/* profile picture */}
-        <Pfp />
+        <Link href="/profile">
+          <Pfp />
+        </Link>
         {/* cart  */}
-        <div className="flex gap-1 mr-4">
+        <Link href="/cart" className="flex gap-1 mr-4">
           {/* cart icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +73,7 @@ const Navbar = async () => {
           </svg>
           {/* local storage count*/}
           <GetLocalStoreCartCount />
-        </div>
+        </Link>
       </div>
     </nav>
   );

@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 interface Session {
   user?: {
@@ -58,8 +59,9 @@ const Pfp = () => {
           </DropdownMenuItem>
         ) : (
           <>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Wishlist</DropdownMenuItem>
+            <Link href="/profile">
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+            </Link>
             <DropdownMenuItem onClick={() => signOut()}>
               Sign out
             </DropdownMenuItem>
