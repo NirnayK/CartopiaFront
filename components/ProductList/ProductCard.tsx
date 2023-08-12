@@ -29,7 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           height={200}
           crop="fill"
           gravity="auto"
-          className="object-cover w-full h-full rounded-lg"
+          className="object-cover rounded-lg"
         />
       </div>
       <div>
