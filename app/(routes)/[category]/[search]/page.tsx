@@ -1,18 +1,8 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import ProductCard from "@/components/ProductList/ProductCard";
 import Category, { CategoryValue } from "@/models/category";
-import Product, { ProductProperties } from "@/models/product";
+import Product, { ProductJSON } from "@/models/product";
 import SearchForm from "@/components/search-form";
-
-interface ProductData {
-  _id: string;
-  name: string;
-  price: number;
-  description: string;
-  category: string;
-  properties: ProductProperties;
-  images: string[];
-}
 
 interface CategoryData {
   values: CategoryValue[];
@@ -21,7 +11,7 @@ interface CategoryData {
 const getProduct = async (
   category: string,
   search: string
-): Promise<ProductData[]> => {
+): Promise<ProductJSON[]> => {
   if (category != "All" && search != "All") {
     return await Product.find({
       category: category,
@@ -34,10 +24,10 @@ const getProduct = async (
   }
 };
 
-const refinedProductData = async (
+const refinedProductJSON = async (
   category: string,
   search: string
-): Promise<ProductData[]> => {
+): Promise<ProductJSON[]> => {
   const data = await getProduct(category, search);
   return data.map((product) => {
     return {
@@ -68,7 +58,7 @@ const page = async ({
   params: { category: string; search: string };
 }) => {
   await mongooseConnect();
-  const products = await refinedProductData(params.category, params.search);
+  const products = await refinedProductJSON(params.category, params.search);
   const category = await getCategory(params.category);
 
   if (!products || !category) {
