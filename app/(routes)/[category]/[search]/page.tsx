@@ -64,15 +64,11 @@ const getCategory = async (
 
 const page = async ({
   params,
-  productlist,
 }: {
   params: { category: string; search: string };
-  productlist?: ProductData[];
 }) => {
   await mongooseConnect();
-  const products = productlist
-    ? productlist
-    : await refinedProductData(params.category, params.search);
+  const products = await refinedProductData(params.category, params.search);
   const category = await getCategory(params.category);
 
   if (!products || !category) {
