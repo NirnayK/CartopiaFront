@@ -61,7 +61,7 @@ const getCategory = async (
     values: data.values,
   };
 };
-
+// Still need to add the sort functionality
 const page = async ({
   params,
 }: {
