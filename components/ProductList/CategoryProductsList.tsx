@@ -40,7 +40,7 @@ const getProducts = async (
   }
 };
 
-const NormalProductsList: React.FC<CategoryID> = async ({ category_id }) => {
+const CategoryProductsList: React.FC<CategoryID> = async ({ category_id }) => {
   const products = await getProducts(category_id);
 
   return (
@@ -52,4 +52,4 @@ const NormalProductsList: React.FC<CategoryID> = async ({ category_id }) => {
   );
 };
 
-export default NormalProductsList;
+export default CategoryProductsList;

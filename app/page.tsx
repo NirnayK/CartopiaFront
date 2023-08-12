@@ -1,7 +1,7 @@
 import Category from "@/models/category";
 import { mongooseConnect } from "@/lib/mongoose";
-import FeaturedProducts from "@/components/ProdCard/FeaturedProducts";
-import NormalProductsList from "@/components/ProdCard/NormalProductsList";
+import FeaturedProducts from "@/components/ProductList/FeaturedProducts";
+import CategoryProductsList from "@/components/ProductList/CategoryProductsList";
 
 export interface CategoryDocument {
   _id: string;
@@ -40,7 +40,7 @@ const Home = async () => {
         {categories.map((category) => (
           <div key={category._id}>
             <h1 className="text-2xl font-bold">{category.name}</h1>
-            <NormalProductsList category_id={category._id} />
+            <CategoryProductsList category_id={category._id} />
             {/* List products with category */}
           </div>
         ))}

@@ -5,6 +5,16 @@ export interface ProductProperties {
   [key: string]: string | number;
 }
 
+export interface ProductJSON {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  category: string;
+  properties: ProductProperties;
+  images: string[];
+}
+
 export interface ProductDocument extends Document {
   name: string;
   price: number;

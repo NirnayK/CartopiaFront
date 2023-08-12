@@ -1,6 +1,6 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import FeatureProduct from "@/models/feature-product";
-import ProductCard from "@/components/ProdCard/ProductCard";
+import ProductCard from "@/components/ProductList/ProductCard";
 
 export interface ProductViewDocument {
   _id: string;

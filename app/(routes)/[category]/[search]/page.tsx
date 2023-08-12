@@ -1,5 +1,5 @@
 import { mongooseConnect } from "@/lib/mongoose";
-import ProductCard from "@/components/ProdCard/ProductCard";
+import ProductCard from "@/components/ProductList/ProductCard";
 import Category, { CategoryValue } from "@/models/category";
 import Product, { ProductProperties } from "@/models/product";
 import SearchForm from "@/components/search-form";
