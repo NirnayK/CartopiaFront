@@ -1,25 +1,28 @@
 "use client";
-
-type Cart = string[];
+import { useState } from "react";
+type Cart = Record<string, number>;
 
 export const getLocalStoreCart = (): Cart => {
   if (typeof window !== "undefined") {
     // Access local storage only on the client-side
     if (localStorage.getItem("cart") === null) {
-      setLocalStoreCart([]);
+      console.log("cart is null");
+      setLocalStoreCart({});
     }
-
+    console.log("cart is not null");
     let cart = localStorage.getItem("cart");
 
     if (cart) {
+      console.log(cart);
       return JSON.parse(cart);
     } else {
-      return [];
+      return {};
     }
   } else {
+    console.log("server side");
     // Server-side behavior
     // Return an empty cart or retrieve it from a server-side storage mechanism
-    return [];
+    return {};
   }
 };
 
@@ -33,23 +36,31 @@ export const setLocalStoreCart = (cart: Cart): void => {
   }
 };
 
-export const addToCart = (ids: string[]): void => {
+export const addToCart = (id: string, count: number): void => {
+  console.log("adding to cart");
+  console.log(id);
+  console.log(count);
   let cart = getLocalStoreCart();
-  cart.push(...ids);
+  cart[id] = (cart[id] || 0) + count;
   setLocalStoreCart(cart);
+  console.log(cart);
 };
 
 export const removeFromCart = (id: string): void => {
   let cart = getLocalStoreCart();
-  cart = cart.filter((itemId) => itemId !== id);
+  delete cart[id];
   setLocalStoreCart(cart);
 };
 
 export const clearCart = (): void => {
-  setLocalStoreCart([]);
+  setLocalStoreCart({});
 };
 
 export const GetLocalStoreCartCount = (): JSX.Element => {
   let cart = getLocalStoreCart();
-  return <p className="text-xl">{cart.length}</p>;
+  const totalItems = Object.values(cart).reduce(
+    (total, quantity) => total + quantity,
+    0
+  );
+  return <p className="text-xl">{totalItems}</p>;
 };

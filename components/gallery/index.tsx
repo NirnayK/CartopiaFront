@@ -23,7 +23,9 @@ const Gallery: React.FC<GalleryProps> = ({ images = [] }) => {
           <Tab.Panel key={image}>
             <div className="aspect-square relative h-full w-full sm:rounded-lg overflow-hidden">
               <CldImage
-                fill
+                height={1000}
+                width={1000}
+                crop="thumb"
                 src={image}
                 alt="Image"
                 className="object-cover object-center"
