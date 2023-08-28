@@ -40,7 +40,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ categories }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-1 items-center w-min">
+    <form onSubmit={handleSubmit} className="flex flex-1 items-center w-auto">
       <Select
         value={categoryId}
         onValueChange={(value) => setCategoryId(value)}

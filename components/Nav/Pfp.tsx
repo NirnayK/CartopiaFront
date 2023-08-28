@@ -47,8 +47,8 @@ const Pfp = () => {
           </DropdownMenuItem>
         ) : (
           <>
-            <Link href="/profile">
-              <DropdownMenuItem>Profile</DropdownMenuItem>
+            <Link href="/account">
+              <DropdownMenuItem>Account</DropdownMenuItem>
             </Link>
             <DropdownMenuItem onClick={() => signOut()}>
               Sign out

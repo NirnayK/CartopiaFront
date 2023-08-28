@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { CategoryValue } from "@/models/category";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { usePathname } from "next/navigation";
 import axios from "axios";
 
