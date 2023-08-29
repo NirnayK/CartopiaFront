@@ -26,7 +26,7 @@ const phoneRegex = new RegExp(
 
 const FormSchema = z.object({
   name: z.string().nonempty(),
-  gender: z.enum(["Male", "Female", "Others"], {
+  gender: z.enum(["Male", "Female"], {
     required_error: "Please select a gender",
   }),
   phoneNumber: z.string().regex(phoneRegex, "Invalid Number!"),
@@ -83,37 +83,39 @@ const ProfileForm = () => {
           name="gender"
           render={({ field }) => (
             <FormItem className="space-y-3">
-              <FormLabel className="text-bold text-xl">
-                Select a Gender
-              </FormLabel>
+              <div className="flex items-center gap-4">
+                <FormLabel className="text-bold text-xl">
+                  Select A Gender
+                </FormLabel>
+                <Button variant="ghost">Edit</Button>
+              </div>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className="flex flex-col space-y-1"
+                  className="flex justify-between"
                 >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="Male" />
-                    </FormControl>
-                    <FormLabel className="font-normal text-lg">Male</FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="Female" />
-                    </FormControl>
-                    <FormLabel className="font-normal text-lg">
-                      Female
-                    </FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="Others" />
-                    </FormControl>
-                    <FormLabel className="font-normal text-lg">
-                      Others
-                    </FormLabel>
-                  </FormItem>
+                  <div className="flex gap-4">
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="Male" />
+                      </FormControl>
+                      <FormLabel className="font-normal text-lg">
+                        Male
+                      </FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center space-x-3 space-y-0">
+                      <FormControl>
+                        <RadioGroupItem value="Female" />
+                      </FormControl>
+                      <FormLabel className="font-normal text-lg">
+                        Female
+                      </FormLabel>
+                    </FormItem>
+                  </div>
+                  <Button variant="outline" size="lg">
+                    Save
+                  </Button>
                 </RadioGroup>
               </FormControl>
               <FormMessage />
@@ -134,7 +136,7 @@ const ProfileForm = () => {
                 <Button variant="ghost">Edit</Button>
               </div>
               <FormControl>
-                <div className="flex items-center gap-4">
+                <div className="flex justify-between">
                   <Input
                     type="string"
                     {...field}

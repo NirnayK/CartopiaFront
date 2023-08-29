@@ -44,7 +44,7 @@ const Navbar = async () => {
         {/* Theme button */}
         <ThemeToggle />
         {/* profile picture */}
-        <Link href="/profile">
+        <Link href="/account">
           <Pfp />
         </Link>
         {/* cart  */}
